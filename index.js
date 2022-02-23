@@ -1,15 +1,20 @@
 const { program } = require("commander");
-const contactsOperation = require("./contacts");
+const {
+  listContacts,
+  getContactById,
+  addContact,
+  removeContactById,
+} = require("./models/contacts/index");
 
 const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
     case "listContacts":
-      const contacts = await contactsOperation.listContacts();
+      const contacts = await listContacts();
       console.log(contacts);
       break;
 
     case "getById":
-      const contact = await contactsOperation.getContactById(id);
+      const contact = await getContactById(id);
       if (!contact) {
         throw new Error(`Product with id=${id} nor found`);
       }
@@ -17,12 +22,12 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
       break;
 
     case "addContact":
-      const newContact = await contactsOperation.addContact(name, email, phone);
+      const newContact = await addContact(name, email, phone);
       console.log(newContact);
       break;
 
     case "removeContact":
-      const removeContact = await contactsOperation.removeContactById(id);
+      const removeContact = await removeContactById(id);
       console.log(removeContact);
       break;
 
